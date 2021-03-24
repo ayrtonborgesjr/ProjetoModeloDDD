@@ -1,0 +1,111 @@
+﻿@*@model IEnumerable<ProjetoModeloDDD.WebAppMVC.ViewModels.ProdutoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4>Produtos</h4>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdutoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disponivel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProdutoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Disponivel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.NomeCompleto)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ProdutoId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ProdutoId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ProdutoId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+@model IEnumerable<ProjetoModeloDDD.WebAppMVC.ViewModels.ProdutoViewModel>;
+
+<h2>Produtos</h2>
+<hr />
+
+<table class="table table-bordered">
+    <thead>
+        <tr style="background-color:#f6f6f6">
+            <th width="5%">#</th>
+            <th width="20%">@Html.DisplayNameFor(model => model.Nome)</th>
+            <th width="20%">@Html.DisplayNameFor(model => model.Valor)</th>
+            <th width="10%">@Html.DisplayNameFor(model => model.Disponivel)</th>
+            <th width="25%">@Html.DisplayNameFor(model => model.Cliente.NomeCompleto)</th>
+            <th width="20%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (item, index) in Model.Select((v, i) => (v, i + 1)))
+        {
+            <tr onclick="Editar(@item.ProdutoId)" style="cursor:pointer;">
+                <td>@index</td>
+                <td>@item.Nome</td>
+                <td>@item.Valor</td>
+                <td>@item.Disponivel</td>
+                <td>@item.Cliente.NomeCompleto</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.ClienteId }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.ClienteId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.ClienteId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+<button type="button" class="btn btn-block btn-primary" onclick="Cadastrar()">Cadastrar Produto</button>
+
+<script>
+    function Editar(Id) {
+        window.location = window.origin + "\\Produtos\\Edit\\" + Id;
+    }
+
+    function Cadastrar() {
+        window.location = window.origin + "\\Produtos\\Create";
+    }
+</script>

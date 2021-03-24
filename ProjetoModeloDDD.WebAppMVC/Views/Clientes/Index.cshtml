@@ -1,0 +1,105 @@
+﻿@*
+@model IEnumerable<ProjetoModeloDDD.WebAppMVC.ViewModels.ClienteViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4>Clientes</h4>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sobrenome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sobrenome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ClienteId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ClienteId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ClienteId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+@model IEnumerable<ProjetoModeloDDD.WebAppMVC.ViewModels.ClienteViewModel>;
+
+<h2>Resultados</h2>
+<hr />
+
+<table class="table table-bordered">
+    <thead>
+        <tr style="background-color:#f6f6f6">
+            <th width="5%">#</th>
+            <th width="40%">@Html.DisplayNameFor(model => model.NomeCompleto)</th>
+            <th width="30%">@Html.DisplayNameFor(model => model.Email)</th>
+            <th width="5%">@Html.DisplayNameFor(model => model.Ativo)</th>
+            <th width="20%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var (item, index) in Model.Select((v, i) => (v, i + 1)))
+        {
+            <tr onclick="Editar(@item.ClienteId)" style="cursor:pointer;">
+                <td>@index</td>
+                <td>@item.NomeCompleto</td>
+                <td>@item.Email</td>
+                <td>@item.Ativo</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.ClienteId }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.ClienteId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.ClienteId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+<button type="button" class="btn btn-block btn-primary" onclick="Cadastrar()">Cadastrar Cliente</button>
+
+<script>
+    function Editar(Id) {
+        window.location = window.origin + "\\Clientes\\Edit\\" + Id;
+    }
+
+    function Cadastrar() {
+        window.location = window.origin + "\\Clientes\\Create";
+    }
+</script>
